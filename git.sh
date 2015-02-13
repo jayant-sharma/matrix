@@ -10,12 +10,11 @@ then
 	echo "github remote added"
 elif [ $1 == 'initlab' ]
 then
-	git remote add origin https://gitlab.com/jayantsharma/matrix.git
+	git remote add origin https://gitlab.com/eda-developers/matrix.git
 	echo "gitlab remote added"
 elif [ $1 == 'seturl' ]
 then
-	git remote set-url origin https://gitlab.com/jayantsharma/matrix.git
-	git remote set-url origin https://github.com/jayant-sharma/matrix.git
+	git remote set-url origin https://gitlab.com/eda-developers/matrix.git
 else
    echo "No git repository mentioned!"
 fi
