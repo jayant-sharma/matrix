@@ -15,6 +15,7 @@ then
 elif [ $1 == 'seturl' ]
 then
 	git remote set-url origin https://gitlab.com/eda-developers/matrix.git
+	git remote set-url origin https://github.com/jayant-sharma/matrix.git
 else
    echo "No git repository mentioned!"
 fi
