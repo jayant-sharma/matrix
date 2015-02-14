@@ -64,7 +64,7 @@ module tb_toeplitz;
 			start = 0;
 			while(!rd)	begin
 				@ (posedge clk);
-				data = 16'hccbb;
+				data = 16'haabb;
 			end
 			data = 16'h0000;
 		end
