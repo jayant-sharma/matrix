@@ -1,3 +1,5 @@
+`timescale 1ns / 1ps
+
 module matrix #(
 	parameter ROW 	= 5,
 	parameter COL 	= 4,
@@ -5,39 +7,31 @@ module matrix #(
 
 )(
 	input clk,
-	input wr,
 	input valid,
 	input [WIDTH-1:0] data
 );
 
-wire N = ROW*COL;
-reg [N-1:0] cnt;
-reg [WIDTH-1:0] mem [0:N-1]; 
+reg [WIDTH-1:0] mat [0:ROW-1] [0:COL-1];
+reg [7:0] r,c;
 
 initial begin
-	cnt <= 0;				
-	state <= 2'b00;
+	c <= 0;
+	r <= 0;
 end
 
 always@(posedge clk) begin
-	case(state)
-		2'b00: begin
-			if(wr) begin
-				cnt <= N;				
-				state <= 2'b01;
-			end
+	if(valid) begin
+		mat[r][c] <= data;
+		c <= c+1;
+		if(c==COL-1) begin	
+			c <= 0;
+			r <= r+1;
 		end
-		2'b01: begin
-			if(cnt != 0) begin
-				if(valid) begin
-					mem[N-cnt] <= data;
-					cnt <= cnt - 1;
-				end
-			end
-			else
-				state <= 2'b00;
-		end
-	endcase
+	end
+	else begin
+		r <= 0;
+		c <= 0;
+	end	
 end
 
 endmodule 
