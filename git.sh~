@@ -49,7 +49,7 @@ then
    echo "<arg1> : git operation - init, push, fpush, pull, seturl"
    echo "<arg1> : repository    - lab, hub"
 else
-   echo "No git repository mentioned!"
+   echo "No git repository mentioned! Use --help"
 fi
 
 

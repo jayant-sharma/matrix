@@ -13,6 +13,7 @@ then
 		echo "gitlab remote added"
 	elif [ $1 == 'push' ]
 	then
+		git remote set-url origin $LABURL
 		git push -u origin master
 		echo "gitlab remote pushed"
 	elif [ $1 == 'fpush' ]
@@ -34,6 +35,7 @@ then
 		echo "github remote added"
 	elif [ $1 == 'push' ]
 	then
+		git remote set-url origin $HUBURL
 		git push -u origin master
 		echo "github remote pushed"
 	elif [ $1 == 'fpush' ]
