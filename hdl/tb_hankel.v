@@ -10,10 +10,11 @@ module tb_hankel;
 
 	// Outputs
 	wire [7:0] addr;
+	
 	wire rd;
 
 	// Instantiate the Unit Under Test (UUT)
-	hankel_matrix uut (
+	hankel_matrixd_d uut (
 		.clk(clk), 
 		.start(start), 
 		.data(data), 
@@ -26,6 +27,7 @@ module tb_hankel;
 		clk = 0;
 		start = 0;
 		data = 0;
+		
 		#20
 		wr_mat();
 		#400
@@ -44,9 +46,9 @@ module tb_hankel;
 			@ (posedge clk);
 			start = 0;
 			@ (posedge clk);
-			for(i=0;i<64;i=i+1) begin
+			for(i=1;i<=64;i=i+1) begin
 				if(rd) begin
-					data = i;
+					data <=addr;
 					@ (posedge clk);
 				end
 				else

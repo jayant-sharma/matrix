@@ -17,7 +17,7 @@ module hankel_matrixd_d #(
 reg [WIDTH-1:0] mat [0:ROW-1] [0:COL-1];
 reg [7:0] r,c,r_i,c_i,state;
 reg		[WIDTH-1:0] 	data_i;
-
+reg	[ADDR-1:0] 	addr_i;
 parameter 
 	IDLE = 2'b00,
 	INIT = 2'b01,
@@ -28,34 +28,32 @@ initial begin
 	c <= 0;
 	r <= 0;
 	addr <=0;
+	//addr_i <=0;
 	rd<=0;
 	state <= IDLE;
 end
 
-always@(posedge clk) begin
-	c_i <= c;
-	r_i <= r;
-//	mat[r_i][c_i] <= data;
-end
+
 
 always@(posedge clk) begin
 	case(state)
 		IDLE: begin
 			if(start) 
 				state <= INIT;
-				rd <=1;
+				rd <=1;				
 				r<=0;
 				c<=0;
 				addr <=0;
 		end
 		INIT: begin
 			if(r==0) begin
-				addr <= addr+1;
-				mat[r_i][c_i] <= data;
+				mat[r][c] <= data;
 				c <= c+1;
+				addr <= addr+1;
 				if(c==COL-1) begin	
 					c <= 0;
 					state <= COPY;
+					
 					r <= r+1;
 				end
 			end
@@ -73,7 +71,7 @@ always@(posedge clk) begin
 		end
 		WRITE: begin
 			
-			mat[r_i][c_i]<= data;
+			mat[r][c]<= data;
 			state <= COPY;
 			r <= r+1;
 			c<=0;
