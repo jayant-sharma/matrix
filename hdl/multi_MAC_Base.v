@@ -1,57 +1,70 @@
 `timescale 1ns / 1ps
 
-module MAC #(
-	parameter N	= 12,
-	parameter WIDTH	= 16,
-	parameter PIPE	= 3
+module multi_MAC_Base #(
+	parameter N		= 6,
+	parameter WIDTH		= 16,
+	parameter M_WIDTH	= 2*WIDTH+N-1
 )(
-	input 				clk,
-	input 				sof,
-	input		[WIDTH-1:0] 	A,
-	input		[WIDTH-1:0] 	B,
-	output reg	[2*WIDTH+N-2:0] C
+	input 					clk,
+	input					sof,
+	input		[N*WIDTH-1:0] 		A,
+	input		[WIDTH-1:0] 		B,
+	output reg	[N*M_WIDTH-1:0] 	C,
+	output reg	[N-1:0]			valid
 );
 
-reg state;
-reg [7:0] n,p;
-wire [2*WIDTH-1:0] O;
-
-parameter 
-	IDLE  = 1'b0,
-	MAC   = 1'b1;
+genvar i;
+generate for (i = 0; i < N; i = i + 1) begin
+	MAC mult_acc (
+	    .clk	(clk), 
+	    .sof	(sof), 
+	    .A		(A[WIDTH*(i+1)-1:WIDTH*i]), 
+	    .B		(B), 
+	    .C		(C[M_WIDTH*(i+1)-1:M_WIDTH*i]),
+	    .valid	(valid[i])
+	);
+end endgenerate
 	
-initial begin
-	n <= N;
-	p <= PIPE;
-	C <= 0;
-	state <= IDLE;
-end
-
+endmodule 
+//////////////////////////////////////////////////////////////////////////////////////
+/*	
 always@(posedge clk) begin
 	case(state)
 		IDLE: begin
-			p <= PIPE;
-			n <= N;
-			if(sof) begin
-				p <= p-1;
-				if(p == 1)
-					state <= MAC;
-			end	
+			i <= 0;
+			j <= 0;
+			if(start) begin
+				i <= 0;
+				j <= 0;
+				state <= FETCH;
+			end
 		end
-		MAC: begin
-			C <= C + O;
-			n <= n-1;
-			if(n == 1)
+		FETCH: begin
+			if(j!= N) begin
+				j <= j + 1;
+				if(i != N) begin
+					i <= i + 1;
+					
+					A_rd <= 1'b1;
+					A_addr <= i;
+					A <= A_dout;
+					
+					B_rd <= 1'b1; 
+					B_addr <= (N*i)+j; 
+					B <= B_dout;
+				end
+			end
+			else
 				state <= IDLE;
 		end
 	endcase
 end
 
-MULT mult_16W(
-	.clk(clk),
-	.a(A),
-	.b(B),
-	.o(O)	
-);
 
-endmodule 
+
+if(MAC_valid) begin
+	C_wr <= 1'b1;
+	C_addr <= C_addr + 1; 
+	C_din <= C;
+end
+*/
