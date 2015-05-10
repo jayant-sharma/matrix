@@ -1,17 +1,17 @@
 `timescale 1ns / 1ps
 
 module MAC #(
-	parameter N	= 5,
-	parameter PIPE	= 2,
-	parameter WIDTH	= 16,
-	parameter M_WIDTH	= 2*WIDTH+N-1
+	parameter N				= 5,
+	parameter PIPE			= 2,
+	parameter WIDTH		= 16,
+	parameter M_WIDTH		= 2*WIDTH+N-1
 )(
-	input 				clk,
-	input 				sof,
-	input		[WIDTH-1:0] 	A,
-	input		[WIDTH-1:0] 	B,
-	output reg	[M_WIDTH-1:0] C,
-	output reg          		valid
+	input 							clk,
+	input 							sof,
+	input			[WIDTH-1:0] 	A,
+	input			[WIDTH-1:0] 	B,
+	output reg	[M_WIDTH-1:0] 	C,
+	output reg          			valid
 );
 
 reg state;
@@ -55,10 +55,10 @@ always@(posedge clk) begin
 end
 
 MULT mult_16W (
-  .clk(clk), // input clk
-  .a(A), // input [15 : 0] a
-  .b(B), // input [15 : 0] b
-  .p(O) // output [31 : 0] p
+  .clk	(clk), 	// input clk
+  .a		(A), 		// input [15 : 0] a
+  .b		(B), 		// input [15 : 0] b
+  .p		(O) 		// output [31 : 0] p
 );
 
 endmodule 
