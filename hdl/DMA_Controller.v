@@ -68,13 +68,19 @@ always@(posedge clk) begin
 		FETCH: begin
 			if(B_addr!= N) begin
 				B_rd <= 1'b1; 
-				B_addr <= B_addr + 1; 
 				if(A_addr != N) begin
 					A_rd <= 1'b1;
 					A_addr <= A_addr + 1;
 					A <= A_dout;
 					B <= (B_dout >> WIDTH*A_addr); 
 					sof <= 1'b1;
+					if(A_addr == N-1) begin
+						B_addr <= B_addr + 1;
+						A_addr <= 0;
+					end
+					if(A_addr == 0) begin
+					//	sof <= 1'b0;
+					end
 				end
 			end
 			else

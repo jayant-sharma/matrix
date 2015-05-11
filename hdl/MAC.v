@@ -2,7 +2,7 @@
 
 module MAC #(
 	parameter N				= 5,
-	parameter PIPE			= 2,
+	parameter PIPE			= 3,
 	parameter WIDTH		= 16,
 	parameter M_WIDTH		= 2*WIDTH+N-1
 )(
@@ -24,7 +24,7 @@ parameter
 	
 initial begin
 	n <= N;
-	p <= PIPE+1;
+	p <= PIPE;
 	C <= 0;
 	valid <= 1'b0;
 	state <= IDLE;
@@ -33,23 +33,34 @@ end
 always@(posedge clk) begin
 	case(state)
 		IDLE: begin
-			p <= PIPE+1;
+			p <= PIPE;
 			n <= N;
 			C <= 0;
 			valid <= 1'b0;
 			if(sof) begin
-				p <= p-1;
-				if(p == 1)
+				if(p > 1)
+					p <= p-1;
+				else	begin// if ((p == 1) || (p ==0))
+					p <= 0;
 					state <= MAC;
+				end
 			end	
 		end
 		MAC: begin
 			C <= C + O;
 			n <= n-1;
+			valid <= 1'b0;
 			if(n == 1) begin
 				valid <= 1'b1;
-				state <= IDLE;
+				if(!sof)
+					state <= IDLE;
+				else begin
+					n <= N;
+					//C <= 0;
+				end
 			end
+			if(n == N)
+				C <= O;
 		end
 	endcase
 end

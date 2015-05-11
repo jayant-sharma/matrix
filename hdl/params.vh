@@ -1,5 +1,5 @@
 `define DATA_WIDTH 	16
-`define MAT_SIZE 		3
+`define MAT_SIZE 		6
 
 `define CLOG2(x)      \
    (x <= 2)    ? 1  : \

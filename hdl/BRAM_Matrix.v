@@ -40,7 +40,7 @@ module BRAM_Matrix #(
 	// USER MEMORY C
 	input	          			C_USR_rd,
 	input		[ADDR-1:0] 		C_USR_addr,
-	output	[N*WIDTH-1:0]	C_USR_dout,
+	output	[N*M_WIDTH-1:0]	C_USR_dout,
 	// MATRIX MEMORY A
 	input							A_MAT_rd,
 	input		[ADDR-1:0] 		A_MAT_addr,
@@ -52,7 +52,7 @@ module BRAM_Matrix #(
 	// MATRIX MEMORY C
 	input							C_MAT_wr,
 	input		[ADDR-1:0]		C_MAT_addr,
-	input		[N*WIDTH-1:0] 	C_MAT_din
+	input		[N*M_WIDTH-1:0] C_MAT_din
 );
     
 dpram A_MEM (
@@ -68,7 +68,7 @@ dpram A_MEM (
 	.dinb     	(),    
 	.doutb    	(A_MAT_dout)
 );
-defparam A_MEM.DATA	= WIDTH;
+defparam A_MEM.DATA	= N*WIDTH;
 defparam A_MEM.ADDR	= ADDR;
 
 dpram B_MEM (
@@ -84,7 +84,7 @@ dpram B_MEM (
 	.dinb     	(),    
 	.doutb    	(B_MAT_dout)  
 );
-defparam B_MEM.DATA	= WIDTH;
+defparam B_MEM.DATA	= N*WIDTH;
 defparam B_MEM.ADDR	= ADDR;
 
 dpram C_MEM (
@@ -100,7 +100,7 @@ dpram C_MEM (
 	.dinb     	(C_MAT_din),    
 	.doutb    	() 
 );
-defparam A_MEM.DATA	= M_WIDTH;
-defparam A_MEM.ADDR	= ADDR;
+defparam C_MEM.DATA	= N*M_WIDTH;
+defparam C_MEM.ADDR	= ADDR;
    
 endmodule

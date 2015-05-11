@@ -29,7 +29,7 @@ always @(posedge clkb) begin
 	if (web) begin
 	mem[addrb] <= dinb;
 	end
-	doutb <= mem[addrb]
+	doutb <= mem[addrb];
 end
 
 endmodule

@@ -24,7 +24,7 @@ generate for (i = 0; i < N; i = i + 1) begin
 	    .valid	(valid[i])
 	);
 	defparam mult_acc.N			= N;
-	defparam mult_acc.PIPE		= 2;
+	defparam mult_acc.PIPE		= 3;
 	defparam mult_acc.WIDTH		= WIDTH;
 	defparam mult_acc.M_WIDTH	= M_WIDTH;
 	

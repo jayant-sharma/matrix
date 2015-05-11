@@ -43,7 +43,7 @@ reg [N*WIDTH-1:0] 	A_USR_din;
 reg [N*WIDTH-1:0] 	B_USR_din;
 
 wire [N-1:0] 			valid;
-wire [N*WIDTH-1:0] 	C_USR_dout;
+wire [N*M_WIDTH-1:0] 	C_USR_dout;
 wire [N*WIDTH-1:0] 	A;
 wire [WIDTH-1:0] 		B;
 wire [N*M_WIDTH-1:0] C;  
@@ -53,10 +53,10 @@ wire B_MAT_rd;
 wire C_MAT_wr;
 wire [ADDR-1:0] 		A_MAT_addr;
 wire [ADDR-1:0] 		B_MAT_addr;
-wire [ADDR-1:0] 		C_MAT_addr
+wire [ADDR-1:0] 		C_MAT_addr;
 wire [N*WIDTH-1:0] 	A_MAT_dout;
 wire [N*WIDTH-1:0] 	B_MAT_dout;;
-wire [N*WIDTH-1:0] 	C_MAT_din;
+wire [N*M_WIDTH-1:0] C_MAT_din;
 
 //////////////////////////////////////////////////////////////////////////
 
