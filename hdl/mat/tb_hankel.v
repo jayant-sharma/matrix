@@ -14,7 +14,7 @@ module tb_hankel;
 	wire rd;
 
 	// Instantiate the Unit Under Test (UUT)
-	hankel_matrixd_d uut (
+	hankel_matrix uut (
 		.clk(clk), 
 		.start(start), 
 		.data(data), 
